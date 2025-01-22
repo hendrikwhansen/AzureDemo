@@ -7,17 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 // Configure database context
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<EmployeeDbContext>(options =>
 {
-    if (builder.Environment.IsDevelopment())
-    {
-        options.UseSqlite(connectionString);
-    }
-    else
-    {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("AzureConnection"));
-    }
+    var connectionString = builder.Environment.IsDevelopment()
+        ? builder.Configuration.GetConnectionString("DefaultConnection")
+        : builder.Configuration.GetConnectionString("AzureConnection");
+    
+    options.UseSqlServer(connectionString);
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

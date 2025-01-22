@@ -1,11 +1,12 @@
 # Employee API
 
-A simple REST API for managing employees using .NET 9, Entity Framework Core, and Azure SQL.
+A simple REST API for managing employees using .NET 9, Entity Framework Core, and SQL Server.
 
 ## Prerequisites
 
 - .NET 9 SDK
 - Visual Studio 2022 or Visual Studio Code
+- SQL Server (LocalDB or higher for development)
 - Azure SQL Database (for production deployment)
 
 ## Local Development Setup
@@ -16,13 +17,15 @@ git clone <repository-url>
 cd EmployeeApi
 ```
 
-2. Create the initial database migration
+2. Ensure SQL Server LocalDB is installed or update the DefaultConnection string in appsettings.json to point to your SQL Server instance
+
+3. Create the initial database migration
 ```bash
 dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
 
-3. Run the application
+4. Run the application
 ```bash
 dotnet run
 ```
@@ -66,7 +69,7 @@ az webapp up --name <app-name> --resource-group <resource-group> --sku F1
 
 ## Development Notes
 
-- The application uses SQLite for local development and Azure SQL for production
+- The application uses SQL Server LocalDB for local development and Azure SQL for production
 - Swagger UI is available in development environment for easy API testing
 - All endpoints support async operations for better performance
 - Input validation is implemented using Data Annotations
@@ -74,7 +77,7 @@ az webapp up --name <app-name> --resource-group <resource-group> --sku F1
 
 ## Database Configuration
 
-- Local development uses SQLite with the database file `EmployeeApp.db`
+- Local development uses SQL Server LocalDB
 - Production uses Azure SQL Database
 - Connection strings are configured in `appsettings.json`
 - Entity Framework Core handles all database operations and migrations
