@@ -3,6 +3,12 @@ using EmployeeApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole(options =>
+{
+    options.TimestampFormat = "[yyyy-MM-dd HH:mm:ss] ";
+});
+
 // Add services to the container.
 builder.Services.AddControllers();
 
