@@ -1,4 +1,3 @@
-using Azure.Identity;
 using Azure.Messaging.ServiceBus;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -29,10 +28,7 @@ public class MailController : ControllerBase
             var queueName = _configuration.GetValue<string>("AzureServiceBus:QueueName")
                 ?? throw new InvalidOperationException("Service Bus queue name not found.");
 
-            await using var client = new ServiceBusClient(connectionString, new AzureDefaultCredential(), new ServiceBusClientOptions
-                {
-                    TransportType = ServiceBusTransportType.AmqpWebSockets
-                });
+            await using var client = new ServiceBusClient(connectionString);
             await using var sender = client.CreateSender(queueName);
 
             var message = new ServiceBusMessage(JsonSerializer.Serialize(mailRequest))
