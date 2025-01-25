@@ -4,6 +4,7 @@ using System.Text.Json;
 using EmployeeApi.Models;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.DataContracts;
+using Azure.Identity;
 
 namespace EmployeeApi.Controllers;
 
@@ -43,7 +44,7 @@ public class MailController : ControllerBase
                 { "subject", mailRequest.Subject }
             });
 
-            await using var client = new ServiceBusClient(connectionString);
+            await using var client = new ServiceBusClient(connectionString, new DefaultAzureCredential());
             await using var sender = client.CreateSender(queueName);
 
             var message = new ServiceBusMessage(JsonSerializer.Serialize(mailRequest))
