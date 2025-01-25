@@ -6,6 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
+// Add Application Insights
+builder.Services.AddApplicationInsightsTelemetry();
+
 // Configure database context
 builder.Services.AddDbContext<EmployeeDbContext>(options =>
 {
